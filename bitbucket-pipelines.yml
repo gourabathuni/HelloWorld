@@ -29,7 +29,6 @@ pipelines:
       #- apt-get update && apt-get install -y postgresql-client
       #- ps -eaf|grep postgres
       #- whereis postgres
-      - /etc/init.d/postgresql restart
       - mv pg_hba.conf  /etc/postgresql/9.6/main/
       #- find / -name pg_hba.conf -type f
       #- locate pg_hba.conf
@@ -40,6 +39,7 @@ pipelines:
       #- postgres psql -p 5432 -h 18.209.93.107
       #- psql -d "testdb" -U "postgres" -f pgtap.sql
       #- make installcheck PGUSER="postgres"
+      - /etc/init.d/postgresql restart
       - psql -d "testdb" -U "postgres" -Xf pgtap.sql
       - pg_prove -d "testdb" -U "postgres" ./*.sql
       - pg_prove -d -U "testdb" "postgres" test.sql
