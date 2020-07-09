@@ -35,7 +35,7 @@ pipelines:
       #- postgres psql -p 5432 -h 18.209.93.107
       #- psql -d "testdb" -U "postgres" -f pgtap.sql
       #- make installcheck PGUSER="postgres"
-      - pg_prove -d -U "postgres" test.sql
+      - pg_prove -d -U "testdb" "postgres" test.sql
       - pg_prove -d "testdb" -U "postgres" ./*.sql
       - pg_prove -d "testdb" -U "postgres" get_active_users.pgtap.sql
       - pg_prove -d "testdb" -U "postgres" users-files-definitions.sql     
