@@ -50,7 +50,7 @@ definitions:
      environment:
        POSTGRES_DB: postgres
        POSTGRES_PASSWORD: Whoami367367
-       DATABASE_URL: psql "postgresql://database-1.ckvqfxcarsew.us-east-1.rds.amazonaws.com:5432"
+       #DATABASE_URL: psql "postgresql://database-1.ckvqfxcarsew.us-east-1.rds.amazonaws.com:5432"
 
 
 
