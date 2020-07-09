@@ -19,14 +19,14 @@ pipelines:
       - cpan TAP::Parser::SourceHandler::pgTAP
       #- make TAPSCHEMA=tap
       
-      - sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-      - wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+      #- sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+      #- wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
 
       - apt-get update -y 
       - apt-get install -y postgresql
       
 
-      #- apt-get update && apt-get install -y postgresql-client
+      - apt-get update && apt-get install -y postgresql-client
       #- ps -eaf|grep postgres
       #- whereis postgres
       - mv pg_hba.conf  /etc/postgresql/9.6/main/
