@@ -9,10 +9,19 @@ pipelines:
   default:
     - step:
         image: perl:5.26
+        caches:
+          - perl
+          - cpan
         script:
-          - perl -v
+          - cpan -T "local::lib"
+          - eval "$(perl -Mlocal::lib=${PWD}/perl_modules)"   # set local lib to ./perl_modules
           - cpan -T "MediaWiki::API"
           - perl -MMediaWiki::API -e 'my $mw = MediaWiki::API->new()'
+definitions:
+  caches:
+    perl: perl_modules
+    cpan: /root/.cpan
+
 
 
 
