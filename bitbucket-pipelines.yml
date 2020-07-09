@@ -7,48 +7,21 @@ image: node:latest
 
 pipelines:
   default:
-   - step:
-      image: node
-      script: # Modify the commands below to build your repository.
-      - apt-get update -y
-      - apt-get install -y pgtap
-      - wget http://api.pgxn.org/dist/pgtap/0.95.0/pgtap-0.95.0.zip
-      - unzip pgtap-0.95.0.zip
-      - cpan TAP::Parser::SourceHandler::pgTAP
-      #- sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
-      #- wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add -
+    - step:
+        image: perl:5.26
+        script:
+          - perl -v
+          - cpan -T "MediaWiki::API"
+          - perl -MMediaWiki::API -e 'my $mw = MediaWiki::API->new()'
+
+
+
       
-      - apt-get update -y 
-      - apt-get install -y postgresql
+      
+      
+      
 
-      #- apt-get update && apt-get install -y postgresql-client
-      #- ps -eaf|grep postgres
-      #- whereis postgres
-      - /etc/init.d/postgresql restart
-      - mv pg_hba.conf  /etc/postgresql/9.6/main/
-      #- find / -name pg_hba.conf -type f
-      #- locate pg_hba.conf
-      #- find pg_hba.conf
-      #- psql -U postgres -c 'SHOW config_file'
-      #- psql -U postgres
-      #- PGPASSWORD=Whoami367367 psql -h 18.209.93.107 -p 5432 -U postgres;
-      #- postgres psql -p 5432 -h 18.209.93.107
-      #- psql -d "testdb" -U "postgres" -f pgtap.sql
-      #- make installcheck PGUSER="postgres"
-      - pg_prove -d -U "testdb" "postgres" test.sql
-      - pg_prove -d "testdb" -U "postgres" ./*.sql
-      - pg_prove -d "testdb" -U "postgres" get_active_users.pgtap.sql
-      - pg_prove -d "testdb" -U "postgres" users-files-definitions.sql     
-      - psql -d "testdb" -U "postgres" -Xf pgtap.sql
-      services:
-       - postgres
+      
+      
 
-definitions:
-  services:
-    postgres:
-     image: postgres
-     environment:
-       POSTGRES_DB: postgres
-       POSTGRES_PASSWORD: Whoami367367
-       DATABASE_URL: psql "postgresql://database-1.ckvqfxcarsew.us-east-1.rds.amazonaws.com:5432"
 
