@@ -31,7 +31,7 @@ pipelines:
       #- find pg_hba.conf
       #- psql -U postgres -c 'SHOW config_file'
       #- psql -U postgres
-      #- PGPASSWORD=Whoami367367 psql -h 18.209.93.107 -p 5432 -U postgres;
+      - PGPASSWORD=Whoami367367 psql -h 18.209.93.107 -p 5432 -U postgres;
       #- postgres psql -p 5432 -h 18.209.93.107
       #- psql -d "testdb" -U "postgres" -f pgtap.sql
       #- make installcheck PGUSER="postgres"
@@ -50,4 +50,5 @@ definitions:
      environment:
        POSTGRES_DB: postgres
        POSTGRES_PASSWORD: Whoami367367
-       #DATABASE_URL: 
+       DATABASE_URL: psql "postgresql://database-1.ckvqfxcarsew.us-east-1.rds.amazonaws.com:5432"
+
