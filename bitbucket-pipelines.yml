@@ -10,13 +10,12 @@ pipelines:
    - step:
       image: node
       script: # Modify the commands below to build your repository.
-      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP 'sudo yum update -y'
-      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP 'sudo yum install -y pgtap'
-      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP  'sudo yum install -y make'
+      - apt-get update -y
+      - apt-get install -y pgtap
+      - apt-get install -y make
       
-      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP 'wget http://api.pgxn.org/dist/pgtap/0.95.0/pgtap-0.95.0.zip'
-      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP 'yum install -y unzip'
-      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP 'unzip pgtap-0.95.0.zip'
+      - wget http://api.pgxn.org/dist/pgtap/0.95.0/pgtap-0.95.0.zip
+      -  unzip pgtap-0.95.0.zip
       #- cpan Module::Build
       #- make TAPSCHEMA=tap
       - cpan TAP::Parser::SourceHandler::pgTAP
@@ -37,12 +36,15 @@ pipelines:
       #- locate pg_hba.conf
       #- find pg_hba.conf
       #- psql -U postgres -c 'SHOW config_file'
-      #- psql -U postgres
+      #
       #- PGPASSWORD=Whoami367367 psql -h 18.209.93.107 -p 5432 -U postgres;
       #- postgres psql -p 5432 -h 18.209.93.107
       #- psql -d "testdb" -U "postgres" -f pgtap.sql
-      #- make installcheck PGUSER="postgres"
-      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP '/etc/init.d/postgresql restart'
+      - make installcheck PGUSER="postgres"
+      - /etc/init.d/postgresql restart
+      - psql -U postgres
+      - CREATE DATABASE testdb;
+      - \q;
       - psql -d "testdb" -U "postgres" -Xf pgtap.sql
       - pg_prove -d "testdb" -U "postgres" get_active_users.pgtap.sql
       - pg_prove -d "testdb" -U "postgres" ./*.sql
