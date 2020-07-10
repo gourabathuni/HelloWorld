@@ -10,9 +10,9 @@ pipelines:
    - step:
       image: node
       script: # Modify the commands below to build your repository.
-      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP 'yum update -y'
-      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP 'yum install -y pgtap'
-      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP  'yum install -y make'
+      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP 'sudo yum update -y'
+      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP 'sudo yum install -y pgtap'
+      - ssh $SSH_SERVER_USER@$SSH_SERVER_IP  'sudo yum install -y make'
       
       - ssh $SSH_SERVER_USER@$SSH_SERVER_IP 'wget http://api.pgxn.org/dist/pgtap/0.95.0/pgtap-0.95.0.zip'
       - ssh $SSH_SERVER_USER@$SSH_SERVER_IP 'yum install -y unzip'
